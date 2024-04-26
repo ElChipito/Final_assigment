@@ -9,11 +9,6 @@
 #define CONVERT_TEMP_PRIORITY       (tskIDLE_PRIORITY + 2)
 #define BINARY_SEARCH_PRIORITY      (tskIDLE_PRIORITY + 1)
 
-/*(0.018 * 1000))
-(0.0192 * 1000))
-(0.02352 * 1000))
-(0.00151 * 1000))*/
-
 /* Déclarations des fonctions externes des tâches */
 extern void print_working(void *pvParameters);
 extern void vTaskConvertTemp(void *pvParameters);
@@ -34,7 +29,7 @@ void ipsa_sched(void)
 
 
 static void print_working(void *pvParameters) {
-	const TickType_t xDelay = pdMS_TO_TICKS(1000);    
+	const TickType_t xDelay = pdMS_TO_TICKS(100); // Period of 100ms
 	while(1) {
         printf("Working\n");
         vTaskDelayUntil(xDelay);
@@ -43,7 +38,7 @@ static void print_working(void *pvParameters) {
 
 
 static void vTaskConvertTemp(void *pvParameters) {
-    const TickType_t xDelay = pdMS_TO_TICKS(700); // Period of 0.7s
+    const TickType_t xDelay = pdMS_TO_TICKS(60); // Period of 60ms
     while(1) {
         double fahrenheit = 98.6;
         FahrenheitToCelsius(fahrenheit);
@@ -57,7 +52,7 @@ void FahrenheitToCelsius(double fahrenheit) {
 
 
 static void vTaskMultiplyNumbers(void *pvParameters) {
-    const TickType_t xDelay = pdMS_TO_TICKS(750); // Period of 0.75s
+    const TickType_t xDelay = pdMS_TO_TICKS(150); // Period of 150ms
     while(1) {
         long int x1 = 19838074558;
         long int x2 = 65642864582;
@@ -68,10 +63,10 @@ static void vTaskMultiplyNumbers(void *pvParameters) {
 }
 
 
-static int arr[50]; // Exemple d'array pour la recherche binaire
+static int arr[50]; 
 
 static void vTaskBinarySearch(void *pvParameters) {
-    const TickType_t xDelay = pdMS_TO_TICKS(750); // Period of 0.75s
+    const TickType_t xDelay = pdMS_TO_TICKS(25); // Period of 25ms
     while(1) {
         int x = 25;
         int result = binary_search(arr, 0, 49, x);
